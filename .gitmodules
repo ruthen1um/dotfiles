@@ -1,0 +1,12 @@
+[submodule ".zsh/zsh-vi-mode"]
+	path = .zsh/zsh-vi-mode
+	url = https://github.com/jeffreytse/zsh-vi-mode
+[submodule ".zsh/zsh-syntax-highlighting"]
+	path = .zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule ".zsh/zsh-autosuggestions"]
+	path = .zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule ".zsh/zsh-autoswitch-virtualenv"]
+	path = .zsh/zsh-autoswitch-virtualenv
+	url = https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
