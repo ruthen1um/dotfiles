@@ -1,0 +1,4 @@
+# ignore files created by fontconfig
+*.uuid
+
+.luarc.json
