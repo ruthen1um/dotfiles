@@ -1,8 +1,4 @@
+vim.loader.enable()
+
 require("core.settings")
 require("core.plugins")
-require("core.autocommands")
-require("plugins.ui")
-require("plugins.nvim-treesitter")
-require("plugins.lsp")
-require("plugins.cmp")
-require("plugins.misc")

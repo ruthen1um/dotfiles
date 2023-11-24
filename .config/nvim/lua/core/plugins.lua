@@ -1,44 +1,116 @@
-require("paq")({
-  "savq/paq-nvim",
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-  --[[ ui ]]--
-  "nvim-tree/nvim-web-devicons",
-  "lukas-reineke/indent-blankline.nvim",
-  "onsails/lspkind.nvim",
-  { "catppuccin/nvim", as = "catppuccin" },
-  "ellisonleao/gruvbox.nvim",
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-  --[[ syntax highlighting ]]--
-  { "nvim-treesitter/nvim-treesitter", run = function() vim.cmd.TSUpdate() end },
+require("lazy").setup({
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
 
-  --[[ lsp ]]--
-  "neovim/nvim-lspconfig",
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = { scope = { enabled = false } },
+  },
 
-  --[[ completion ]]--
-  "hrsh7th/nvim-cmp",
-  "windwp/nvim-autopairs",
-  "kylechui/nvim-surround",
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme("catppuccin-mocha")
+    end,
+  },
 
-  --[[ completion sources ]]--
-  "hrsh7th/cmp-nvim-lsp-signature-help",
-  "amarakon/nvim-cmp-buffer-lines",
-  "hrsh7th/cmp-cmdline",
-  "hrsh7th/cmp-nvim-lsp",
-  "hrsh7th/cmp-nvim-lua",
-  "hrsh7th/cmp-buffer",
-  "hrsh7th/cmp-path",
-  "hrsh7th/cmp-omni",
-  "dcampos/cmp-snippy",
-  "dcampos/nvim-snippy",
-  "honza/vim-snippets",
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    main = "nvim-treesitter.configs",
+    opts = {
+      highlight = { enable = true },
+      indent = { enable = true },
+      auto_install = true,
+    }
+  },
 
-  --[[ conviniency ]]
-  "numToStr/Comment.nvim",
-  "norcalli/nvim-colorizer.lua",
+  {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "LspInfo", "LspInstall", "LspUninstall" },
+    config = function()
+      require("plugins.lsp")
+    end
+  },
 
-  "lervag/vimtex",
-  "scalameta/nvim-metals",
+  { "folke/neodev.nvim", opts = {} },
+  -- { "folke/neoconf.nvim", cmd = "Neoconf" },
 
-  "nvim-lua/plenary.nvim",
-  "dstein64/vim-startuptime",
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      -- "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lua",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "ray-x/lsp_signature.nvim",
+      "saadparwaiz1/cmp_luasnip",
+      "L3MON4D3/LuaSnip",
+    },
+    event = { "InsertEnter", "CmdlineEnter" },
+    config = function()
+      require("plugins.cmp")
+    end
+  },
+
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    opts = {},
+  },
+
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {}
+  },
+
+  {
+    "numToStr/Comment.nvim",
+    opts = {},
+    lazy = false,
+  },
+
+  {
+    "dstein64/vim-startuptime",
+    cmd = "StartupTime",
+  },
+
+  {
+    "lervag/vimtex",
+    ft = "tex",
+    config = function()
+      vim.g.vimtex_view_method = 'zathura'
+    end,
+  },
+
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {},
+  },
 })

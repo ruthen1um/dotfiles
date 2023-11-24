@@ -9,10 +9,10 @@
 ### Steps
 
 1. Clone
-[this repository](https://github.com/ruthen1um/dotfiles)
+[this repository](https://gitlab.com/ruthen1um/dotfiles)
 somewhere:
 ```shell
-git clone https://github.com/ruthen1um/dotfiles.git ~/.dotfiles
+git clone https://gitlab.com/ruthen1um/dotfiles.git ~/.dotfiles
 ```
 
 2. `cd` to the cloned repo:

@@ -1,4 +1,11 @@
 # ignore files created by fontconfig
 *.uuid
 
+# lua-language-server
 .luarc.json
+
+# lazy.nvim
+lazy-lock.json
+
+# do not track backup files
+*~

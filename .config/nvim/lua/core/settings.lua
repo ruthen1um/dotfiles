@@ -1,42 +1,55 @@
-local opt = vim.opt
+vim.opt.termguicolors = true
 
-opt.number = true
-opt.softtabstop = 4
-opt.tabstop = 4
-opt.shiftwidth = 4
-opt.expandtab = true
-opt.smartindent = true
-opt.ignorecase = true
-opt.termguicolors = true
-opt.list = true
-opt.mouse = "a"
-opt.pumheight = 10
-opt.smartcase = true
-opt.updatetime = 300
-opt.timeoutlen = 300
-opt.cursorline = true
-opt.wrap = false
-opt.spell = false
-opt.wrapscan = false
-opt.scrolloff = 4
-opt.sidescrolloff = 8
-opt.equalalways = true
-opt.clipboard = "unnamedplus"
-opt.splitbelow = true
-opt.splitright = true
-opt.swapfile = false
-opt.undofile = true
-opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
-opt.foldenable = false
-opt.foldminlines = 5
-opt.foldnestmax = 5
-opt.laststatus = 3
-opt.showtabline = 2
-opt.completeopt = "menu,preview,menuone,noselect"
-opt.textwidth = 79
+-- line number
+vim.opt.number = false
+vim.opt.relativenumber = true
 
-opt.shortmess = {
+-- tabs
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
+-- indentation
+-- vim.opt.smartindent = true
+vim.opt.autoindent = true
+
+-- search
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+vim.opt.list = true -- show hidden chars
+vim.opt.mouse = nil -- true vim user (disable mouse)
+
+-- completion window
+vim.opt.pumheight = 20
+vim.opt.pumwidth = 20
+
+vim.opt.updatetime = 750 -- some recommended value
+vim.opt.timeoutlen = 300
+vim.opt.cursorline = true
+vim.opt.wrap = false
+vim.opt.wrapscan = false
+vim.opt.spell = false
+vim.opt.spelllang = { 'en_us', 'ru' }
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 16
+vim.opt.equalalways = true
+vim.opt.clipboard = "unnamed"
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.swapfile = false
+vim.opt.undofile = true
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = false
+vim.opt.foldminlines = 5
+vim.opt.foldnestmax = 5
+vim.opt.laststatus = 3
+vim.opt.showtabline = 0
+vim.opt.completeopt = "menu,preview,menuone,noselect"
+vim.opt.backup = true
+
+vim.opt.shortmess = {
   a = true,
   o = true,
   O = true,
@@ -45,7 +58,7 @@ opt.shortmess = {
   c = true,
 }
 
-opt.fillchars = {
+vim.opt.fillchars = {
   horiz     = '━',
   horizup   = '┻',
   horizdown = '┳',
@@ -55,12 +68,11 @@ opt.fillchars = {
   verthoriz = '╋',
 }
 
-opt.listchars = {
+vim.opt.listchars = {
   tab   = "··",
   trail = "·",
 }
 
-vim.cmd.colorscheme("catppuccin-mocha")
 vim.g.mapleader = [[\]]
-vim.g.python_host_skip_check = 1
-vim.loader.enable()
+-- vim.g.python3_host_prog = "/usr/bin/python3"
+-- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "" })

@@ -36,7 +36,7 @@ export VISUAL="$EDITOR"
 
 ### aliases ###
 alias ezs="eza -aF --group-directories-first"
-alias ezl="eza -l --group-directories-first"
+alias ezl="eza -al --group-directories-first"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
 alias ip="ip -color=auto"
