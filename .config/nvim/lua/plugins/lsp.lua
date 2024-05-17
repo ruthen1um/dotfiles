@@ -46,7 +46,6 @@ vim.diagnostic.config({ update_in_insert = true, virtual_text = false, signs = f
 lspconfig["lua_ls"].setup({
   on_attach = on_attach,
   capabilities = capabilities,
-  cmd = { os.getenv("HOME") .. "/repo/lua-language-server/bin/lua-language-server" },
   settings = {
     Lua = {
       diagnostics = {

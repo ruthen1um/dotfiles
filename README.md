@@ -12,7 +12,7 @@
 [this repository](https://gitlab.com/ruthen1um/dotfiles)
 somewhere:
 ```shell
-git clone https://gitlab.com/ruthen1um/dotfiles.git ~/.dotfiles
+git clone --recurse-submodules https://gitlab.com/ruthen1um/dotfiles.git ~/.dotfiles
 ```
 
 2. `cd` to the cloned repo:

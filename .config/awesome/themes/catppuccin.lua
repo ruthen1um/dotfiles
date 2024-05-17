@@ -1,5 +1,13 @@
 local gears = require("gears")
-local catppuccin = require("catppuccin")
+local naughty = require("naughty")
+local status_ok, catppuccin = pcall(require, "catppuccin")
+
+if not status_ok then
+    naughty.notification {
+        urgency = "critical",
+        message = "couldn't load catppuccin from luarocks"
+    }
+end
 
 local config_dir = gears.filesystem.get_configuration_dir()
 local icons_dir = config_dir .. "icons/"
