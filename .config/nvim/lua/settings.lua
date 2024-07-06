@@ -10,8 +10,8 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
 -- indentation
--- vim.opt.smartindent = true
-vim.opt.autoindent = true
+vim.opt.smartindent = false
+vim.opt.autoindent = false
 
 -- search
 vim.opt.ignorecase = true
@@ -47,7 +47,6 @@ vim.opt.foldnestmax = 5
 vim.opt.laststatus = 3
 vim.opt.showtabline = 0
 vim.opt.completeopt = "menu,preview,menuone,noselect"
-vim.opt.backup = true
 
 vim.opt.shortmess = {
   a = true,
@@ -74,5 +73,3 @@ vim.opt.listchars = {
 }
 
 vim.g.mapleader = [[\]]
--- vim.g.python3_host_prog = "/usr/bin/python3"
--- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "" })
