@@ -6,6 +6,11 @@ return {
   },
 
   {
+    "norcalli/nvim-colorizer.lua",
+    opts = {}
+  },
+
+  {
     "catppuccin/nvim",
     enabled = false,
     name = "catppuccin",

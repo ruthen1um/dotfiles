@@ -37,7 +37,7 @@ end)
 -- }}}
 
 -- Apply theme
-beautiful.init(themes_dir .. "catppuccin.lua")
+beautiful.init(themes_dir .. "kanagawa.lua")
 
 -- {{{ Variable definitions
 local terminal = "wezterm"
@@ -233,10 +233,10 @@ awful.keyboard.append_global_keybindings({
 -- Audio keys
 awful.keyboard.append_global_keybindings({
   awful.key({  }, "XF86AudioRaiseVolume", function()
-    awful.spawn.easy_async_with_shell("pactl set-sink-volume @DEFAULT_SINK@ +1%", function() end)
+    awful.spawn.easy_async_with_shell("pactl set-sink-volume @DEFAULT_SINK@ +3%", function() end)
   end),
   awful.key({  }, "XF86AudioLowerVolume", function()
-    awful.spawn.easy_async_with_shell("pactl set-sink-volume @DEFAULT_SINK@ -1%", function() end)
+    awful.spawn.easy_async_with_shell("pactl set-sink-volume @DEFAULT_SINK@ -3%", function() end)
   end),
   awful.key({  }, "XF86AudioMute", function()
     awful.spawn.easy_async_with_shell("pactl set-sink-mute @DEFAULT_SINK@ toggle", function() end)
@@ -245,10 +245,10 @@ awful.keyboard.append_global_keybindings({
     awful.spawn.easy_async_with_shell("pactl set-source-mute @DEFAULT_SOURCE@ toggle", function() end)
   end),
   awful.key({  }, "XF86MonBrightnessUp", function()
-    awful.spawn.easy_async_with_shell("xbacklight -set $(($(xbacklight -get)+1))", function() end)
+    awful.spawn.easy_async_with_shell("xbacklight -set $(($(xbacklight -get)+3))", function() end)
   end),
   awful.key({  }, "XF86MonBrightnessDown", function()
-    awful.spawn.easy_async_with_shell("xbacklight -set $(($(xbacklight -get)-1))", function() end)
+    awful.spawn.easy_async_with_shell("xbacklight -set $(($(xbacklight -get)-3))", function() end)
   end),
 })
 
@@ -299,7 +299,9 @@ end)
 client.connect_signal("request::default_keybindings", function()
   awful.keyboard.append_client_keybindings({
     awful.key({ modkey }, "f", function (c) c.fullscreen = not c.fullscreen end,
-      { description = "toggle fullscreen", group = "client" }),
+      { description = "toggle fullscreen mode", group = "client" }),
+    awful.key({ modkey }, "s", function (c) c.floating = not c.floating end,
+      { description = "toggle floating mode", group = "client" }),
     awful.key({ modkey }, "q", function (c) c:kill() end,
       { description = "close", group = "client" }),
   })
