@@ -1,0 +1,11 @@
+[init]
+  defaultBranch = main
+[user]
+  name = Oleg Fedotov
+  email = ol.fed25@gmail.com
+[core]
+  editor = nvim
+[color]
+  ui = auto
+[credential]
+  helper = store

@@ -1,11 +1,12 @@
 local gears = require("gears")
 local naughty = require("naughty")
-local status_ok, catppuccin = pcall(require, "catppuccin")
+package.path = package.path .. ";~/.local/share/nvim/lazy/kanagawa.nvim/lua/"
+local status_ok, colorscheme = pcall(require, "kanagawa.colors")
 
 if not status_ok then
     naughty.notification {
         urgency = "critical",
-        message = "couldn't load catppuccin from luarocks"
+        message = ("couldn't load %"):format(colorscheme_name)
     }
 end
 
@@ -14,8 +15,6 @@ local icons_dir = config_dir .. "icons/"
 
 local theme = {}
 
-local palette_name = "mocha"
-local palette = catppuccin[palette_name]()
 local color = "lavender"
 
 theme.font      = "JetBrains Mono NL 11"

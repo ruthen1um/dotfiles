@@ -23,7 +23,6 @@ local menubar = require("menubar")
 
 -- dirs
 local themes_dir = gears.filesystem.get_configuration_dir() .. "themes/"
-local scripts_dir = gears.filesystem.get_configuration_dir() .. "scripts/"
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -41,7 +40,7 @@ end)
 beautiful.init(themes_dir .. "catppuccin.lua")
 
 -- {{{ Variable definitions
-local terminal = "xfce4-terminal"
+local terminal = "wezterm"
 local screenshot_tool = "flameshot gui"
 local modkey = "Mod4"
 -- }}}
@@ -162,6 +161,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       {
         layout = wibox.layout.fixed.horizontal,
         s.mypromptbox,
+        wibox.widget.systray(),
         s.mykeyboardlayout,
       }
     }
@@ -230,36 +230,25 @@ awful.keyboard.append_global_keybindings({
     { description = "show the menubar", group = "launcher"}),
 })
 
-local function sink_volume_change()
-  awful.spawn.easy_async_with_shell(scripts_dir .. "sink_get_volume.sh", function(stdout)
-    -- remove trailing newline
-    stdout = stdout:gsub("%W", "")
-    naughty.notification {
-      text = "громкость: " .. stdout
-    }
-  end)
-end
-
-local function sink_mute_change()
-  awful.spawn.easy_async_with_shell(scripts_dir .. "sink_get_mute.sh", function(stdout)
-    -- remove trailing newline
-    stdout = stdout:gsub("%W", "")
-    naughty.notification {
-      text = "динамик " .. (stdout == "0" and "включен" or "отключен")
-    }
-  end)
-end
-
 -- Audio keys
 awful.keyboard.append_global_keybindings({
   awful.key({  }, "XF86AudioRaiseVolume", function()
-    awful.spawn.easy_async_with_shell(scripts_dir .. "sink_volume_up.sh", sink_volume_change)
+    awful.spawn.easy_async_with_shell("pactl set-sink-volume @DEFAULT_SINK@ +1%", function() end)
   end),
   awful.key({  }, "XF86AudioLowerVolume", function()
-    awful.spawn.easy_async_with_shell(scripts_dir .. "sink_volume_down.sh", sink_volume_change)
+    awful.spawn.easy_async_with_shell("pactl set-sink-volume @DEFAULT_SINK@ -1%", function() end)
   end),
   awful.key({  }, "XF86AudioMute", function()
-    awful.spawn.easy_async_with_shell(scripts_dir .. "sink_volume_toggle.sh", sink_mute_change)
+    awful.spawn.easy_async_with_shell("pactl set-sink-mute @DEFAULT_SINK@ toggle", function() end)
+  end),
+  awful.key({  }, "XF86AudioMicMute", function()
+    awful.spawn.easy_async_with_shell("pactl set-source-mute @DEFAULT_SOURCE@ toggle", function() end)
+  end),
+  awful.key({  }, "XF86MonBrightnessUp", function()
+    awful.spawn.easy_async_with_shell("xbacklight -set $(($(xbacklight -get)+1))", function() end)
+  end),
+  awful.key({  }, "XF86MonBrightnessDown", function()
+    awful.spawn.easy_async_with_shell("xbacklight -set $(($(xbacklight -get)-1))", function() end)
   end),
 })
 
@@ -377,6 +366,5 @@ end)
 awful.spawn.with_shell(
   'if (xrdb -query | grep -q "^awesome\\.started:\\s*true$"); then exit; fi;' ..
   'xrdb -merge <<< "awesome.started:true";' ..
-  '~/startkeepassxc.sh &;' ..
   'dex --environment Awesome --autostart'
 )

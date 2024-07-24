@@ -2,16 +2,19 @@
 local bin_dir=~/bin
 if ! [[ -d $bin_dir ]]; then
   mkdir $bin_dir
+  # TODO
+  # void linux installation
+  # which curl &> /dev/null || sudo xbps-install curl
   curl -o $bin_dir/eget.sh https://zyedidia.github.io/eget.sh
   shasum -a 256 $bin_dir/eget.sh
   (cd $bin_dir && bash $bin_dir/eget.sh)
   rm $bin_dir/eget.sh
 
-  eget --to $bin_dir --file eza eza-community/eza
-  eget --to $bin_dir --file vivid sharkdp/vivid
-  eget --to $bin_dir --file fd sharkdp/fd
-  eget --to $bin_dir --file yt-dlp yt-dlp/yt-dlp
-  eget --to $bin_dir --file texlab latex-lsp/texlab
+  $bin_dir/eget --to $bin_dir --file eza eza-community/eza
+  $bin_dir/eget --to $bin_dir --file vivid sharkdp/vivid
+  $bin_dir/eget --to $bin_dir --file fd sharkdp/fd
+  $bin_dir/eget --to $bin_dir --file yt-dlp yt-dlp/yt-dlp
+  $bin_dir/eget --to $bin_dir --file texlab latex-lsp/texlab
 fi
 
 # source zsh plugins
