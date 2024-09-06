@@ -1,0 +1,103 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "modules-left": [
+        "sway/mode",
+        "sway/workspaces",
+        "wlr/taskbar"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "tray",
+        "network",
+        "bluetooth",
+        "pulseaudio#sink",
+        "pulseaudio#source",
+        "battery",
+        "backlight",
+        "sway/language"
+    ],
+    "sway/workspaces": {
+        "all-outputs": true
+    },
+    "wlr/taskbar": {
+        "all-outputs": true,
+        "icon-size": 18,
+        "on-click": "minimize-raise"
+    },
+    "clock": {
+        "format": "  {:%d/%m/%y %R}",
+        "tooltip": false
+        // "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        // "calendar": {
+        //     "mode"          : "year",
+        //     "mode-mon-col"  : 3,
+        //     "weeks-pos"     : "right",
+        //     "on-scroll"     : 1,
+        //     "format": {
+        //         "months":     "<span color='#ffead3'><b>{}</b></span>",
+        //         "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+        //         "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+        //         "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+        //         "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+        //     }
+        // }
+    },
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "weighted-average": true,
+        "tooltip-format": "{time}"
+    },
+    "bluetooth": {
+        "format": "󰂯 {status}",
+        "format-connected": "󰂯 {device_alias}",
+        "on-click": "rfkill toggle bluetooth",
+        "tooltip": false
+    },
+    "network": {
+        "format-wifi": "󰖩 {essid}",
+        "format-ethernet": "󰈁 on",
+        "format-disconnected": "󰀂 off",
+        "on-click": "rfkill toggle wlan",
+        "tooltip": false
+    },
+    "sway/language": {
+        "format": "{short}",
+        "tooltip": false,
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+    },
+    "backlight": {
+        "format": "󰃟 {percent}%",
+        "tooltip": false,
+        "reverse-scrolling": true
+    },
+    "tray": {
+        "show-passive-items": true
+    },
+    "pulseaudio#sink": {
+        "format": "󰖀 {volume}%",
+        "format-muted": "󰸈 {volume}%",
+        "on-scroll-up": "wpctl set-volume --limit 1.5 @DEFAULT_SINK@ 1%+",
+        "on-scroll-down": "wpctl set-volume --limit 1.5 @DEFAULT_SINK@ 1%-",
+        "on-click": "wpctl set-mute @DEFAULT_SINK@ toggle",
+        "reverse-scrolling": true
+    },
+    "pulseaudio#source": {
+        "format": "{format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "󰍭 {volume}%",
+        "on-scroll-up": "wpctl set-volume --limit 1.0 @DEFAULT_SOURCE@ 1%+",
+        "on-scroll-down": "wpctl set-volume --limit 1.0 @DEFAULT_SOURCE@ 1%-",
+        "on-click": "wpctl set-mute @DEFAULT_SOURCE@ toggle",
+        "reverse-scrolling": true
+    },
+    "tray": {
+        "spacing": 4,
+        "icon-size": 18
+    }
+}

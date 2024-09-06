@@ -50,9 +50,15 @@ return {
       capabilities = capabilities,
     })
 
-    lspconfig["ccls"].setup({
+    lspconfig["clangd"].setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
+
+    lspconfig["jdtls"].setup({
       on_attach = on_attach,
       capabilities = capabilities,
     })
   end
 }
+

@@ -6,7 +6,21 @@ return {
   },
 
   {
+    "mfussenegger/nvim-jdtls",
+  },
+
+  {
     "norcalli/nvim-colorizer.lua",
+    opts = {}
+  },
+
+  {
+    "williamboman/mason.nvim",
+    opts = {}
+  },
+
+  {
+    "williamboman/mason-lspconfig.nvim",
     opts = {}
   },
 

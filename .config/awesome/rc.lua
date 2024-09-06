@@ -42,7 +42,7 @@ beautiful.init(themes_dir .. "kanagawa.lua")
 -- {{{ Variable definitions
 local terminal = "wezterm"
 local screenshot_tool = "flameshot gui"
-local modkey = "Mod4"
+local super_key = "Mod4"
 -- }}}
 
 -- {{{ Tag layout
@@ -90,11 +90,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
   s.mykeyboardlayout = awful.widget.keyboardlayout()
 
   -- Create a promptbox for each screen
-  s.mypromptbox = awful.widget.prompt()
+  -- mypromptbox = awful.widget.prompt()
 
   -- Create a textclock widget
   s.mydatewidget = wibox.widget.textclock("%A, %B %d")
   s.mytimewidget = wibox.widget.textclock("%H:%M")
+  s.mysystray = wibox.widget.systray()
 
   -- Create a taglist widget
   s.mytaglist = awful.widget.taglist {
@@ -102,7 +103,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     filter  = awful.widget.taglist.filter.all,
     buttons = {
       awful.button({ }, awful.button.names.LEFT, function(t) t:view_only() end),
-      awful.button({ modkey }, awful.button.names.LEFT, function(t)
+      awful.button({ super_key }, awful.button.names.LEFT, function(t)
         if client.focus then
           client.focus:move_to_tag(t)
         end
@@ -160,9 +161,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
       },
       {
         layout = wibox.layout.fixed.horizontal,
-        s.mypromptbox,
-        wibox.widget.systray(),
         s.mykeyboardlayout,
+        s.mybatterywidget,
+        s.mysystray,
       }
     }
   }
@@ -174,75 +175,77 @@ end)
 
 -- Awesome related keys
 awful.keyboard.append_global_keybindings({
-  awful.key({ modkey, "Control" }, "r", awesome.restart,
+  awful.key({ super_key, "Control" }, "h", hotkeys_popup.show_help,
+    { description = "show help", group = "awesome"}),
+  awful.key({ super_key, "Control" }, "r", awesome.restart,
     { description = "reload awesome", group = "awesome" }),
-  awful.key({ modkey, "Control" }, "q", awesome.quit,
+  awful.key({ super_key, "Control" }, "q", awesome.quit,
     { description = "quit awesome", group = "awesome" }),
-  awful.key({ modkey, "Control" }, "/", hotkeys_popup.show_help,
-    { description = "show help", group = "awesome" }),
+  awful.key({ super_key, "Control" }, "/", hotkeys_popup.show_help,
+    { description = "show help", group = "awesome" })
 })
 
 -- Tags related keybindings
 awful.keyboard.append_global_keybindings({
-  awful.key({ modkey }, "Left", awful.tag.viewprev,
+  awful.key({ super_key }, "Left", awful.tag.viewprev,
     { description = "view previous", group = "tag" }),
-  awful.key({ modkey }, "Right", awful.tag.viewnext,
-    { description = "view next", group = "tag" }),
+  awful.key({ super_key }, "Right", awful.tag.viewnext,
+    { description = "view next", group = "tag" })
 })
 
--- Layout related keybindings
-awful.keyboard.append_global_keybindings({
-  awful.key({ modkey, "Control" }, "Left", function() awful.layout.inc(-1) end,
-    { description = "select previous", group = "layout" }),
-  awful.key({ modkey, "Control" }, "Right", function() awful.layout.inc(1) end,
-    { description = "select next", group = "layout" }),
-})
+-- -- Layout related keybindings
+-- awful.keyboard.append_global_keybindings({
+--   awful.key({ modkey, "Control" }, "Left", function() awful.layout.inc(-1) end,
+--     { description = "select previous", group = "layout" }),
+--   awful.key({ modkey, "Control" }, "Right", function() awful.layout.inc(1) end,
+--     { description = "select next", group = "layout" }),
+-- })
 
 -- Focus related keybindings
 awful.keyboard.append_global_keybindings({
-  awful.key({ modkey }, "h", function() awful.client.focus.bydirection("left", client.focus) end,
+  awful.key({ super_key }, "h", function() awful.client.focus.bydirection("left", client.focus) end,
     { description = "switch to the client on the left", group = "focus" }),
-  awful.key({ modkey }, "j", function() awful.client.focus.bydirection("down", client.focus) end,
+  awful.key({ super_key }, "j", function() awful.client.focus.bydirection("down", client.focus) end,
     { description = "switch to the client below", group = "focus" }),
-  awful.key({ modkey }, "k", function() awful.client.focus.bydirection("up", client.focus) end,
+  awful.key({ super_key }, "k", function() awful.client.focus.bydirection("up", client.focus) end,
     { description = "switch to the client above", group = "focus" }),
-  awful.key({ modkey }, "l", function() awful.client.focus.bydirection("right", client.focus) end,
+  awful.key({ super_key }, "l", function() awful.client.focus.bydirection("right", client.focus) end,
     { description = "switch to the client on the right", group = "focus" }),
 
-  awful.key({ modkey, "Control" }, "h", function() awful.client.swap.bydirection("left", client.focus) end,
+  awful.key({ super_key, "Control" }, "h", function() awful.client.swap.bydirection("left", client.focus) end,
     { description = "swap the focused client with the client on the left", group = "focus" }),
-  awful.key({ modkey, "Control" }, "j", function() awful.client.swap.bydirection("down", client.focus) end,
+  awful.key({ super_key, "Control" }, "j", function() awful.client.swap.bydirection("down", client.focus) end,
     { description = "swap the focused client with the client below", group = "focus" }),
-  awful.key({ modkey, "Control" }, "k", function() awful.client.swap.bydirection("up", client.focus) end,
+  awful.key({ super_key, "Control" }, "k", function() awful.client.swap.bydirection("up", client.focus) end,
     { description = "swap the focused client with the client above", group = "focus" }),
-  awful.key({ modkey, "Control" }, "l", function() awful.client.swap.bydirection("right", client.focus) end,
+  awful.key({ super_key, "Control" }, "l", function() awful.client.swap.bydirection("right", client.focus) end,
     { description = "swap the focused client with the client on the right", group = "focus" }),
 })
 -- Custom keys
 awful.keyboard.append_global_keybindings({
-  awful.key({ modkey }, "Return", function() awful.spawn(terminal) end,
+  awful.key({ super_key }, "Return", function() awful.spawn(terminal) end,
     { description = "open the terminal", group = "launcher" }),
   awful.key({ }, "Print", function() awful.spawn(screenshot_tool) end,
     { description = "open the screenshot tool", group = "launcher" }),
-  awful.key({ modkey }, "r", function() awful.screen.focused().mypromptbox:run() end,
-    { description = "run command", group = "launcher" }),
-  awful.key({ modkey }, "p", menubar.show,
+  -- awful.key({ modkey }, "r", function() awful.screen.focused().mypromptbox:run() end,
+  --   { description = "run command", group = "launcher" }),
+  awful.key({ super_key }, "p", menubar.show,
     { description = "show the menubar", group = "launcher"}),
 })
 
 -- Audio keys
 awful.keyboard.append_global_keybindings({
   awful.key({  }, "XF86AudioRaiseVolume", function()
-    awful.spawn.easy_async_with_shell("pactl set-sink-volume @DEFAULT_SINK@ +3%", function() end)
+    awful.spawn.easy_async_with_shell("wpctl set-volume @DEFAULT_SINK@ 3%+", function() end)
   end),
   awful.key({  }, "XF86AudioLowerVolume", function()
-    awful.spawn.easy_async_with_shell("pactl set-sink-volume @DEFAULT_SINK@ -3%", function() end)
+    awful.spawn.easy_async_with_shell("wpctl set-volume @DEFAULT_SINK@ 3%-", function() end)
   end),
   awful.key({  }, "XF86AudioMute", function()
-    awful.spawn.easy_async_with_shell("pactl set-sink-mute @DEFAULT_SINK@ toggle", function() end)
+    awful.spawn.easy_async_with_shell("wpctl set-mute @DEFAULT_SINK@ toggle", function() end)
   end),
   awful.key({  }, "XF86AudioMicMute", function()
-    awful.spawn.easy_async_with_shell("pactl set-source-mute @DEFAULT_SOURCE@ toggle", function() end)
+    awful.spawn.easy_async_with_shell("wpctl set-mute @DEFAULT_SOURCE@ toggle", function() end)
   end),
   awful.key({  }, "XF86MonBrightnessUp", function()
     awful.spawn.easy_async_with_shell("xbacklight -set $(($(xbacklight -get)+3))", function() end)
@@ -254,7 +257,7 @@ awful.keyboard.append_global_keybindings({
 
 awful.keyboard.append_global_keybindings({
   awful.key({
-    modifiers   = { modkey },
+    modifiers   = { super_key },
     keygroup    = "numrow",
     description = "only view tag",
     group       = "tag",
@@ -267,7 +270,7 @@ awful.keyboard.append_global_keybindings({
     end,
   }),
   awful.key({
-    modifiers = { modkey, "Control" },
+    modifiers = { super_key, "Control" },
     keygroup    = "numrow",
     description = "move focused client to tag",
     group       = "tag",
@@ -287,10 +290,10 @@ client.connect_signal("request::default_mousebindings", function()
     awful.button({ }, 1, function(c)
       c:activate { context = "mouse_click" }
     end),
-    awful.button({ modkey }, 1, function(c)
+    awful.button({ super_key }, 1, function(c)
       c:activate { context = "mouse_click", action = "mouse_move" }
     end),
-    awful.button({ modkey }, 3, function(c)
+    awful.button({ super_key }, 3, function(c)
       c:activate { context = "mouse_click", action = "mouse_resize" }
     end),
   })
@@ -298,11 +301,13 @@ end)
 
 client.connect_signal("request::default_keybindings", function()
   awful.keyboard.append_client_keybindings({
-    awful.key({ modkey }, "f", function (c) c.fullscreen = not c.fullscreen end,
+    awful.key({ super_key }, "f", function (c) c.fullscreen = not c.fullscreen end,
       { description = "toggle fullscreen mode", group = "client" }),
-    awful.key({ modkey }, "s", function (c) c.floating = not c.floating end,
+    awful.key({ super_key }, "m", function (c) c.maximized = not c.maximized end,
+      { description = "toggle maximized mode", group = "client" }),
+    awful.key({ super_key }, "s", function (c) c.floating = not c.floating end,
       { description = "toggle floating mode", group = "client" }),
-    awful.key({ modkey }, "q", function (c) c:kill() end,
+    awful.key({ super_key }, "q", function (c) c:kill() end,
       { description = "close", group = "client" }),
   })
 end)
@@ -311,26 +316,35 @@ end)
 
 -- {{{ Rules
 -- Rules to apply to new clients.
--- ruled.client.connect_signal("request::rules", function()
---     -- All clients will match this rule.
---     ruled.client.append_rule({
---         id         = "global",
---         rule       = { },
---         properties = {
---             focus     = awful.client.focus.filter,
---             raise     = true,
---             screen    = awful.screen.preferred,
---             placement = awful.placement.no_overlap+awful.placement.no_offscreen
---         }
---     })
---
---     -- Add titlebars to normal clients and dialogs
---     ruled.client.append_rule({
---         id         = "titlebars",
---         rule_any   = { type = { "normal", "dialog" } },
---         properties = { titlebars_enabled = false     }
---     })
--- end)
+ruled.client.connect_signal("request::rules", function()
+  -- All clients will match this rule.
+  ruled.client.append_rule({
+    id         = "global",
+    rule       = { },
+    properties = {
+      focus     = awful.client.focus.filter,
+      raise     = true,
+      maximized = false,
+      screen    = awful.screen.preferred,
+      placement = awful.placement.no_overlap + awful.placement.no_offscreen
+    }
+  })
+
+  ruled.client.append_rule({
+    rule = { class = "rocketleague.exe" },
+    properties = {
+      fullscreen = true,
+      floating = true,
+      size_hints_honor = false,
+    }
+  })
+
+  ruled.client.append_rule({
+    id         = "titlebars",
+    rule_any   = { type = { "normal", "dialog" } },
+    properties = { titlebars_enabled = false }
+  })
+end)
 -- }}}
 
 -- {{{ Titlebars
@@ -368,5 +382,5 @@ end)
 awful.spawn.with_shell(
   'if (xrdb -query | grep -q "^awesome\\.started:\\s*true$"); then exit; fi;' ..
   'xrdb -merge <<< "awesome.started:true";' ..
-  'dex --environment Awesome --autostart'
+  'dex --environment Awesome --autostart --search-paths "${XDG_CONFIG_HOME:-$HOME/.config}/autostart:${XDG_CONFIG_DIRS:-/etc/xdg}/autostart";'
 )
