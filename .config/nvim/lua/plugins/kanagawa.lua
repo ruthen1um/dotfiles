@@ -21,6 +21,14 @@ local color_overrides = function(colors)
     ["@variable.cpp"] = { fg = palette.carpYellow },
     ["@property.cpp"] = { fg = palette.surimiOrange },
 
+    --[[ java ]]
+    ["@keyword.modifier.java"] = { fg = palette.springViolet1 },
+    ["@keyword.operator.java"] = { fg = palette.waveRed, italic = true },
+    ["@keyword.import.java"] = { fg = palette.waveRed, italic = true },
+    ["@keyword.type.java"] = { fg = palette.sakuraPink },
+    ["@type.builtin.java"] = { fg = palette.roninYellow },
+    ["@type.java"] = { fg = palette.waveAqua2 },
+
     --[[ editor ]]
     LineNr = { fg = palette.surimiOrange, bg = "none" },
     CursorLine = { bg = theme.ui.bg_gutter },

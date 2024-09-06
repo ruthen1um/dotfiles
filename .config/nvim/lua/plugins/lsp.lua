@@ -10,8 +10,10 @@ return {
       hint_enable = false,
     })
 
-    local on_attach = function(_, bufnr)
+    local on_attach = function(client, bufnr)
       local opts = { noremap = true, buffer = bufnr }
+
+      client.server_capabilities.semanticTokensProvider = nil
 
       vim.keymap.set("n", "gd", vim.lsp.buf.declaration, opts)
       vim.keymap.set("n", "<C-]>", vim.lsp.buf.definition, opts)

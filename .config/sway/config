@@ -15,13 +15,13 @@ set $term wezterm
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu fuzzel --list-executables-in-path | xargs swaymsg exec --
+set $menu fuzzel | xargs swaymsg exec --
 
 ### Output configuration
 set $internal_output eDP-1
 set $external_output HDMI-A-1
 
-output * background ~/.config/awesome/wallpapers/wallhaven-exrqrr.jpg fill
+output * background $sumiInk3 solid_color
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
@@ -178,6 +178,13 @@ bar {
   swaybar_command waybar
 }
 
+client.focused $sumiInk2 $dragonBlue $sumiInk2 $dragonBlue
+client.focused_inactive $sumiInk2 $sumiInk2 $fujiWhite $sumiInk2
+client.unfocused $sumiInk2 $sumiInk2 $fujiWhite $sumiInk2
+client.urgent $samuraiRed $samuraiRed $sumiInk1 $samuraiRed
+
+title_align center
+
 font "JetBrains Mono 11"
 
 set $volume_step 1
@@ -195,3 +202,4 @@ bindsym XF86MonBrightnessDown exec xbacklight -set $(($(xbacklight -get)-$bright
 exec dex --autostart
 exec --no-startup-id dbus-update-activation-environment --all
 exec_always xbacklight -set 45
+exec_always autotiling
