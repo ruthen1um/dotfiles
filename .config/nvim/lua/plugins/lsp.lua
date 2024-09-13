@@ -60,6 +60,13 @@ return {
     lspconfig["jdtls"].setup({
       on_attach = on_attach,
       capabilities = capabilities,
+      settings = {
+        java = {
+          codeGeneration = {
+            generateComments = false
+          }
+        }
+      }
     })
   end
 }
