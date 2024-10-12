@@ -26,7 +26,8 @@ output * background $sumiInk3 solid_color
 
 ### Idle configuration
 exec swayidle -w \
-         timeout 300 'swaymsg "output $internal_output power off"' resume 'swaymsg "output $internal_output power on"' \
+         timeout 300 'exec swaymsg "output $internal_output power off"' \
+         resume 'swaymsg "output $internal_output power on"'
 
 ### Input configuration
 input type:touchpad {
@@ -162,25 +163,24 @@ font "JetBrains Mono 11"
 set $volume_step 1
 set $brightness_step 1
 
-bindsym XF86AudioRaiseVolume exec wpctl set-volume --limit 1.0 @DEFAULT_SINK@ $brightness_step%+
-bindsym XF86AudioLowerVolume exec wpctl set-volume --limit 1.0 @DEFAULT_SINK@ $brightness_step%-
-bindsym Ctrl+XF86AudioRaiseVolume exec wpctl set-volume --limit 1.0 @DEFAULT_SOURCE@ $brightness_step%+
-bindsym Ctrl+XF86AudioLowerVolume exec wpctl set-volume --limit 1.0 @DEFAULT_SOURCE@ $brightness_step%-
-bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86MonBrightnessUp exec xbacklight -set $(($(xbacklight -get)+$brightness_step))
-bindsym XF86MonBrightnessDown exec xbacklight -set $(($(xbacklight -get)-$brightness_step))
+bindsym XF86AudioRaiseVolume      exec wpctl set-volume --limit 1.5 @DEFAULT_SINK@ $brightness_step%+
+bindsym XF86AudioLowerVolume      exec wpctl set-volume --limit 1.5 @DEFAULT_SINK@ $brightness_step%-
+bindsym Ctrl+XF86AudioRaiseVolume exec wpctl set-volume --limit 1.5 @DEFAULT_SOURCE@ $brightness_step%+
+bindsym Ctrl+XF86AudioLowerVolume exec wpctl set-volume --limit 1.5 @DEFAULT_SOURCE@ $brightness_step%-
+bindsym XF86AudioMute             exec wpctl set-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute          exec wpctl set-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86MonBrightnessUp       exec xbacklight -set $(($(xbacklight -get)+$brightness_step))
+bindsym XF86MonBrightnessDown     exec xbacklight -set $(($(xbacklight -get)-$brightness_step))
 
-bindsym Print exec flameshot gui
-bindsym Ctrl+Print exec flameshot screen
+bindsym Print                     exec myshot --format jpeg copy anything
 
 for_window [app_id=".*"] floating enable, border pixel 1
-for_window [app_id="flameshot"] sticky enable
 for_window [app_id="org.wezfurlong.wezterm"] floating disable
 
 gaps inner 5
 
-# exec dbus-update-activation-environment --all
+focus_follows_mouse no
+
 exec dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec dex --autostart
 exec wl-paste --watch cliphist store

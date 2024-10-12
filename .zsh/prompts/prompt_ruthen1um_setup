@@ -1,0 +1,24 @@
+# ruthen1um's prompt theme
+
+prompt_ruthen1um_setup () {
+  prompt_ruthen1um_color1='blue'
+  prompt_ruthen1um_color2='cyan'
+  prompt_ruthen1um_color3='green'
+
+  user="%F{$prompt_ruthen1um_color1}%n%f"
+  at_sign="%F{$prompt_ruthen1um_color2}@%f"
+  hostname="%F{$prompt_ruthen1um_color3}%m%f"
+  base_prompt="$user$at_sign$hostname"
+  path_prompt="%B%F{$prompt_ruthen1um_color2}%~%b%f"
+  post_prompt="%b%f%k"
+
+  add-zsh-hook precmd prompt_ruthen1um_precmd
+}
+
+prompt_ruthen1um_precmd () {
+  PS1="$base_prompt $path_prompt %# $post_prompt"
+  PS2="$base_prompt $path_prompt %_> $post_prompt"
+  PS3="$base_prompt $path_prompt ?# $post_prompt"
+}
+
+prompt_ruthen1um_setup "$@"

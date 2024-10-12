@@ -1,36 +1,15 @@
-# install binaries with `eget`
-local bin_dir=~/bin
-if ! [[ -d $bin_dir ]]; then
-  mkdir $bin_dir
-  # TODO
-  # void linux installation
-  # which curl &> /dev/null || sudo xbps-install curl
-  curl -o $bin_dir/eget.sh https://zyedidia.github.io/eget.sh
-  shasum -a 256 $bin_dir/eget.sh
-  (cd $bin_dir && bash $bin_dir/eget.sh)
-  rm $bin_dir/eget.sh
-
-  $bin_dir/eget --to $bin_dir --file eza eza-community/eza
-  $bin_dir/eget --to $bin_dir --file vivid sharkdp/vivid
-  $bin_dir/eget --to $bin_dir --file fd sharkdp/fd
-  $bin_dir/eget --to $bin_dir --file yt-dlp yt-dlp/yt-dlp
-  $bin_dir/eget --to $bin_dir --file texlab latex-lsp/texlab
-fi
-
 # source zsh plugins
-local plugin_dir=~/.zsh
+local plugin_dir=$HOME/.zsh
 for plugin ($plugin_dir/**/*.plugin.zsh) do;
   source $plugin
 done
 
-if [[ -f ~/.zshrc.private ]]; then
-  source ~/.zshrc.private
-fi
+export PATH="$PATH:$HOME/.local/bin"
+export XDG_SCREENSHOTS_DIR="$HOME/Screenshots"
 
-export PATH=$PATH:$bin_dir:~/.local/bin
-
-# generate LS_COLORS
-export LS_COLORS="$(vivid generate catppuccin-mocha)"
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
 
 export PAGER="less"
 export MANPAGER="$PAGER"
@@ -46,8 +25,11 @@ alias ip="ip -color=auto"
 alias less="less -R"
 alias h="history"
 
-autoload -Uz compinit
-compinit
+fpath=(~/.zsh/prompts/ $fpath)
+
+autoload -Uz compinit && compinit
+autoload -Uz promptinit && promptinit
+prompt ruthen1um
 
 zstyle ":completion:*" menu select
 zstyle ':completion:*' file-list all
@@ -58,23 +40,18 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 bindkey "^ " autosuggest-execute
 bindkey "^F" autosuggest-accept
 
-setopt append_history
+# push dirs to stack
 setopt auto_pushd
 setopt pushd_ignore_dups
+
+setopt auto_cd
+
+setopt auto_menu
+
+# history options
+setopt inc_append_history
+setopt hist_ignore_all_dups
+setopt hist_no_store
+setopt hist_reduce_blanks
+
 setopt extended_glob
-
-export SAVEHIST=10000
-export HISTSIZE=10000
-export HISTFILE=~/.zsh_history
-
-setopt prompt_subst
-
-function status() {
-  if [[ "$?" -eq "0" ]]; then
-    echo -n $'(%{\e[92m%}'$?'%{\e[0m%})'
-  else
-    echo -n $'(%{\e[91m%}'$?'%{\e[0m%})'
-  fi
-}
-
-PROMPT=$'[%{\e[3;96m%}%n%{\e[0;95m%}:%{\e[93m%}%~%{\e[0m%}]$(status)$ '

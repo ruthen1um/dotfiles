@@ -58,73 +58,59 @@ tooltip label {
   color: @fujiWhite;
 }
 
-.module {
-    color: @sumiInk1;
-    margin: 4px 4px 4px 4px;
-    border-radius: 5px;
-    /* min-height: 25px; */
-}
-
 label.module {
     padding-left: 5px;
     padding-right: 5px;
 }
 
 #workspaces button, #taskbar button, #tray {
-    padding: 4px 4px 4px 4px;
+    padding: 5px;
 }
 
 #clock {
-    background-color: @autumnYellow;
+    color: @autumnYellow;
 }
 
 #network {
-    background-color: @autumnGreen;
+    color: @autumnGreen;
 }
 
 #bluetooth {
-    background-color: @crystalBlue;
+    color: @crystalBlue;
 }
 
 #pulseaudio.sink {
-    background-color: @oniViolet;
+    color: @oniViolet;
 }
 
 #pulseaudio.source {
-    background-color: @sakuraPink;
+    color: @sakuraPink;
 }
 
 #battery {
-    background-color: @springGreen;
+    color: @springGreen;
 }
 
 #backlight {
-    background-color: @carpYellow;
+    color: @carpYellow;
 }
 
 #language {
-    background-color: @springViolet2;
-}
-
-#mode {
-    color: @fujiWhite;
-    background-color: @autumnRed;
+    color: @springViolet2;
 }
 
 #tray {
-    background-color: @sumiInk3;
+    color: @fujiWhite;
 }
 
 #workspaces {
     color: @fujiWhite;
-    background-color: @sumiInk3;
 }
 
 #workspaces button, #taskbar button {
     margin: 3px 3px 3px 3px;
-    border-radius: 5px;
     transition-property: color, background-color;
-    transition-duration: 0.4s;
+    transition-duration: 0.3s;
     transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
@@ -141,8 +127,4 @@ label.module {
 #workspaces button:hover, #taskbar button:hover {
     background-color: @roninYellow;
     color: @sumiInk1;
-}
-
-#taskbar {
-    background-color: @sumiInk3;
 }

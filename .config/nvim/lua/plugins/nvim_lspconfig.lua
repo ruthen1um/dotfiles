@@ -1,3 +1,23 @@
+local on_init = function(client, _)
+  if client.server_capabilities then
+    client.server_capabilities.semanticTokensProvider = nil
+  end
+end
+
+local on_attach = function(client, bufnr)
+  local opts = { noremap = true, buffer = bufnr }
+
+  vim.keymap.set("n", "gd", vim.lsp.buf.declaration, opts)
+  vim.keymap.set("n", "<C-]>", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
+  vim.keymap.set("n", "<F3>", vim.lsp.buf.code_action, opts)
+  vim.keymap.set("n", "<F4>", vim.lsp.buf.format, opts)
+  vim.keymap.set("n", "dp", vim.diagnostic.goto_prev, opts)
+  vim.keymap.set("n", "dn", vim.diagnostic.goto_next, opts)
+end
+
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPost", "BufNewFile" },
@@ -10,25 +30,10 @@ return {
       hint_enable = false,
     })
 
-    local on_attach = function(client, bufnr)
-      local opts = { noremap = true, buffer = bufnr }
-
-      client.server_capabilities.semanticTokensProvider = nil
-
-      vim.keymap.set("n", "gd", vim.lsp.buf.declaration, opts)
-      vim.keymap.set("n", "<C-]>", vim.lsp.buf.definition, opts)
-      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-      vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
-      vim.keymap.set("n", "<F3>", vim.lsp.buf.code_action, opts)
-      vim.keymap.set("n", "<F4>", vim.lsp.buf.format, opts)
-      vim.keymap.set("n", "dp", vim.diagnostic.goto_prev, opts)
-      vim.keymap.set("n", "dn", vim.diagnostic.goto_next, opts)
-    end
-
     vim.diagnostic.config({ update_in_insert = true, virtual_text = false, signs = false })
 
     lspconfig["lua_ls"].setup({
+      on_init = on_init,
       on_attach = on_attach,
       capabilities = capabilities,
       settings = {
@@ -48,16 +53,25 @@ return {
     })
 
     lspconfig["pylsp"].setup({
+      on_init = on_init,
       on_attach = on_attach,
       capabilities = capabilities,
     })
 
     lspconfig["clangd"].setup({
+      on_init = on_init,
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
+
+    lspconfig["cmake"].setup({
+      on_init = on_init,
       on_attach = on_attach,
       capabilities = capabilities,
     })
 
     lspconfig["jdtls"].setup({
+      on_init = on_init,
       on_attach = on_attach,
       capabilities = capabilities,
       settings = {
