@@ -21,7 +21,9 @@ set $menu fuzzel | xargs swaymsg exec --
 set $internal_output eDP-1
 set $external_output HDMI-A-1
 
-output * background $sumiInk3 solid_color
+# output * background $sumiInk3 solid_color
+set $wallpaper "~/Pictures/dune_evening.jpg"
+output * background $wallpaper fill
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
@@ -163,16 +165,17 @@ font "JetBrains Mono 11"
 set $volume_step 1
 set $brightness_step 1
 
-bindsym XF86AudioRaiseVolume      exec wpctl set-volume --limit 1.5 @DEFAULT_SINK@ $brightness_step%+
-bindsym XF86AudioLowerVolume      exec wpctl set-volume --limit 1.5 @DEFAULT_SINK@ $brightness_step%-
-bindsym Ctrl+XF86AudioRaiseVolume exec wpctl set-volume --limit 1.5 @DEFAULT_SOURCE@ $brightness_step%+
-bindsym Ctrl+XF86AudioLowerVolume exec wpctl set-volume --limit 1.5 @DEFAULT_SOURCE@ $brightness_step%-
-bindsym XF86AudioMute             exec wpctl set-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioMicMute          exec wpctl set-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86MonBrightnessUp       exec xbacklight -set $(($(xbacklight -get)+$brightness_step))
-bindsym XF86MonBrightnessDown     exec xbacklight -set $(($(xbacklight -get)-$brightness_step))
-
-bindsym Print                     exec myshot --format jpeg copy anything
+bindsym --to-code XF86AudioRaiseVolume      exec wpctl set-volume --limit 1.5 @DEFAULT_SINK@ $brightness_step%+
+bindsym --to-code XF86AudioLowerVolume      exec wpctl set-volume --limit 1.5 @DEFAULT_SINK@ $brightness_step%-
+bindsym --to-code Ctrl+XF86AudioRaiseVolume exec wpctl set-volume --limit 1.5 @DEFAULT_SOURCE@ $brightness_step%+
+bindsym --to-code Ctrl+XF86AudioLowerVolume exec wpctl set-volume --limit 1.5 @DEFAULT_SOURCE@ $brightness_step%-
+bindsym --to-code XF86AudioMute             exec wpctl set-mute @DEFAULT_SINK@ toggle
+bindsym --to-code XF86AudioMicMute          exec wpctl set-mute @DEFAULT_SOURCE@ toggle
+bindsym --to-code XF86MonBrightnessUp       exec xbacklight -set $(($(xbacklight -get)+$brightness_step))
+bindsym --to-code XF86MonBrightnessDown     exec xbacklight -set $(($(xbacklight -get)-$brightness_step))
+bindsym --to-code XF86AudioPlay             exec playerctl play-pause
+bindsym --to-code Print                     exec ~/.local/bin/myshot --notify --format jpeg copy anything
+bindsym --to-code Ctrl+Print                exec ~/.local/bin/myshot --format jpeg save anything - | tesseract-ocr - - -l eng+rus | wl-copy
 
 for_window [app_id=".*"] floating enable, border pixel 1
 for_window [app_id="org.wezfurlong.wezterm"] floating disable

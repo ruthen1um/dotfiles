@@ -9,7 +9,7 @@ return {
       }
     },
     cmake_runner = {
-      name = "quickfix",
+      name = "terminal",
       opts = {
         auto_close_when_success = false
       }

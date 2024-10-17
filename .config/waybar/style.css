@@ -44,6 +44,7 @@
 
 window#waybar {
     background-color: @sumiInk1;
+    opacity: 0.9;
 }
 
 tooltip, #tray menu {
